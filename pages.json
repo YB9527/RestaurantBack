@@ -1,0 +1,59 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"disableScroll":true
+			}
+		}
+	    ,{
+            "path" : "pages/canZhuo/canZhuo",
+            "style": {
+            	"disableScroll":true
+            }
+        }
+        ,{
+            "path" : "pages/foodTypeManager/foodTypeManager",
+            "style": {
+            	"disableScroll":true
+            }
+        }
+        ,{
+            "path" : "pages/evaluateManger/evaluateManger",
+           "style": {
+           	"disableScroll":true
+           }
+            
+        }
+        ,{
+            "path" : "pages/business/business",
+           "style": {
+           	"disableScroll":true
+           }
+            
+        }
+        ,{
+            "path" : "pages/restaurantConfig/restaurantConfig",
+            "style": {
+            	"disableScroll":true
+            }
+            
+        }
+        ,{
+            "path" : "pages/foodManager/foodManager",
+           "style": {
+           	"disableScroll":true
+           }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "王氏羊肉",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"style":{
+			
+		}
+	}
+}
