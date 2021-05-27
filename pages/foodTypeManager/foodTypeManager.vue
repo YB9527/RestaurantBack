@@ -43,10 +43,12 @@
 							</view>
 						</view>
 					</view >
-						<view class="addfood"> 
-							  <button   type="primary" @click="gotoAddFood(currentfoodtypeid)">添加食物</button>
-						</view>
-					 
+					<view class="addfood"> 
+						  <button   type="primary" @click="gotoAddFood(currentfoodtypeid)">添加食物</button>
+					</view>
+					<view  class="deletetype" v-if="!foodList || foodList.length === 0">
+						<button  type="warn" @click="deleteType(currentfoodtypeid)">删除类型</button>
+					 </view>
 				</scroll-view>
 			</view> 
 			
@@ -137,7 +139,20 @@
 					.then(res=>{
 						this.foodtypeList.push(foodType)
 					})
-			
+			},
+			deleteType(typeid){
+				foodTypeApi.deleteFoodType({id:typeid})
+					.then(()=>{
+						for (var i = 0; i < this.foodtypeList.length; i++) {
+								if(this.foodtypeList[i].id === typeid){
+									this.foodtypeList.splice(i,1);
+									break;
+								}
+						}
+						this.currentfoodtypeid =  this.foodtypeList.length > 0 ?this.foodtypeList[0].id:"";
+						this.init();
+					})
+				
 			},
 			//到编辑食物页面
 			gotoFoodManager(foodid){
@@ -201,11 +216,15 @@
 				//console.log(1,foodApi.findFoodByTypeId(typeid));
 				foodApi.findFoodByTypeId(typeid)
 					.then(foods=>{
+						
 						for (let food of foods) {
 							food.url = this.$Api.imgpriewurl+food.imageurl;
 							//console.log(food.url);
 						}
-						this.foodList = foods;
+						if(this.foodList && this.foodList.length > 0){
+							this.foodList.splice(0,this.foodList.length);
+						}
+						this.foodList.push(...foods);
 					});
 			},
 			//点菜
@@ -389,8 +408,14 @@
 			}
 		}
 		.right{
+			min-height: 100%;
 			.addfood{
 				padding: 20rpx 40rpx;
+			}
+			.deletetype{
+				position: absolute;
+				bottom: 50rpx;
+				right: 50rpx;
 			}
 			scroll-view{
 				width: 100%;

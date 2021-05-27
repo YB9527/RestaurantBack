@@ -16,3 +16,9 @@ var findAll = function(){
 }
 exports.findAll = findAll;
 
+
+var deleteFoodType = function(foodtype){
+	let url = baseURL+"/delete";
+	return api.requestPOST({url,data:foodtype});
+}
+exports.deleteFoodType = deleteFoodType;
