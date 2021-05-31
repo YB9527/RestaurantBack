@@ -21,7 +21,7 @@
 					:key="food.id"
 					@click="gotoFoodManager(food.id)"
 					class="food">
-						<image :src="food.url"></image>
+						<image :src="food.url" mode="aspectFit"></image>
 						<view class="content">
 							<view class="top" >
 								<text class="label">{{food.label}}</text>
