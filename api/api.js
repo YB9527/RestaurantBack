@@ -17,7 +17,7 @@ var requestPOST = function({url,data,header}) {
 			method: "POST",
 			data,
 			header: header ? header : {
-				"Content-Type": "application/x-www-form-urlencoded"
+				"Content-Type": "application/json;chartset=uft-8"
 			},
 			success: (res) => {
 				if (res.data.success) {

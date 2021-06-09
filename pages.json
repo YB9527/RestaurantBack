@@ -11,6 +11,11 @@
             "style": {
             	"disableScroll":true
             }
+        } ,{
+            "path" : "pages/canZhuo/canZhuoFood",
+            "style": {
+            	"disableScroll":true
+            }
         }
         ,{
             "path" : "pages/foodTypeManager/foodTypeManager",

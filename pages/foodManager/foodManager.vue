@@ -47,7 +47,7 @@
 
 <script>
 	import ldSelect from '@/components/ld-select/ld-select.vue'
-	import foodApi from '../common/foodApi.js'
+	import foodApi from '@/api/foodApi.js'
 	export default {
 		components: {
 			ldSelect

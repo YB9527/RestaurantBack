@@ -3,7 +3,7 @@
 		  <scroll-view class="mainscroll"  scroll-y="true" >
 		             <uni-grid :column="3" :showBorder="false"  :square="false">
 		             	<uni-grid-item v-for="(canzhuonum,index) in canzhuomax">
-		             		<view v-if="!canzhuonummap[index+1]" class="item" @click="canZhuoInfo(index+1)">
+		             		<view v-if="!canzhuonummap[index+1]" class="item" @click="showNoCanZhuo(index+1)">
 		             			<image  src="/static/imgs/canzhuo_wait.png" ></image>
 		             			<text class="zhuohao">{{index+1}}号桌</text>
 		             			<text class="peoplecont"></text>
@@ -17,7 +17,7 @@
 		             		
 		             	</uni-grid-item>
 		             </uni-grid>
-		             <view class="foodcontent" >
+		            <!-- <view class="foodcontent" >
 		             	<view class="title">
 		             		<text v-if="currentcanzhuo" >{{currentcanzhuo.num}}号桌菜品</text>
 		             		<text v-else >未入座</text>
@@ -31,14 +31,14 @@
 		             			</view>
 		             		</uni-grid-item>
 		             	</uni-grid>
-		             </view>   
+		             </view>   -->
 			</scroll-view>
 		
 
 </template>
 
 <script>
-	
+	import canZhuoApi from '@/api/canZhuoApi.js'
 	export default {
 		data() {
 			return {
@@ -68,17 +68,49 @@
 		},
 		created() {
 			this.canzhuonummap = this.$Tool.groupByAttributeSingle(this.canzhuoArray,"num");
-			console.log(this.canzhuonummap);
+			//console.log(this.canzhuonummap);
 			this.currentcanzhuo = this.canzhuoArray[0];
+			this.init();
 		},
 		methods: {
+			init(){
+				this.findcanZhuoCount();
+				this.findCanZhuoState();
+			},
+			//查找总桌数
+			findcanZhuoCount(){
+				canZhuoApi.getCanZhuoCount().then(canzhuocount=>{
+					if(canzhuocount){
+						//console.log(1,canzhuocount)
+						this.canzhuomax = canzhuocount * 1;
+					}
+				});
+			},
+			//查找所有餐桌的状态及人数
+			findCanZhuoState(){
+				canZhuoApi.findCanZhuoHomeData()
+					.then(datas=>{
+						console.log(datas);
+					});
+			},
 			canZhuoInfo(canzhuonum){
 				this.currentcanzhuo = this.canzhuonummap[canzhuonum];
 				if(!this.currentcanzhuo){
 					this.currentcanzhuo = "";
 				}
+				let url = "/pages/canZhuo/canZhuoFood?canzhuonum="+canzhuonum;
+				uni.navigateTo({
+					url
+				})
 				console.log("canzhuonummap",this.canzhuonummap[canzhuonum]);
 			},
+			//点击的餐桌
+			showNoCanZhuo(canzhuonum){
+				uni.showToast({
+					title:canzhuonum+"号桌无人",
+					icon:"none"
+				})
+			}
 			
 		}
 	}

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-	import canZhuoApi from '../common/canZhuoApi.js'
+	import canZhuoApi from '@/api/canZhuoApi.js'
 	export default {
 		data() {
 			return {

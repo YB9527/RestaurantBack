@@ -21,7 +21,7 @@
 					:key="food.id"
 					@click="gotoFoodManager(food.id)"
 					class="food">
-						<image :src="food.url" mode="aspectFit"></image>
+						<image :src="food.url" mode="aspectFill"></image>
 						<view class="content">
 							<view class="top" >
 								<text class="label">{{food.label}}</text>
@@ -61,8 +61,8 @@
 </template>
 
 <script>
-		import foodTypeApi from '../common/foodTypeApi.js'
-		import foodApi from '../common/foodApi.js'
+		import foodTypeApi from '@/api/foodTypeApi.js'
+		import foodApi from '@/api/foodApi.js'
 	export default {
 		data() {
 			return {
