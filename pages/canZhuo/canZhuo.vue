@@ -1,166 +1,270 @@
 <template>
-	
-		  <scroll-view class="mainscroll"  scroll-y="true" >
-		             <uni-grid :column="3" :showBorder="false"  :square="false">
-		             	<uni-grid-item v-for="(canzhuonum,index) in canzhuomax">
-		             		<view v-if="!canzhuonummap[index+1]" class="item" @click="showNoCanZhuo(index+1)">
-		             			<image  src="/static/imgs/canzhuo_wait.png" ></image>
-		             			<text class="zhuohao">{{index+1}}号桌</text>
-		             			<text class="peoplecont"></text>
-		             		</view>
-		             		<view v-else class="item" @click="canZhuoInfo(index+1)" >
-		             			<image v-if="canzhuonummap[canzhuonum].isfinish" src="/static/imgs/canzhuo_finish.png"></image>
-		             			<image v-else src="/static/imgs/canzhuo_ing.png"></image>
-		             			<text class="zhuohao">{{index+1}}号桌</text>
-		             			<text class="peoplecont">{{canzhuonummap[index+1].peoplecount}}人</text>
-		             		</view>
-		             		
-		             	</uni-grid-item>
-		             </uni-grid>
-		            <!-- <view class="foodcontent" >
-		             	<view class="title">
-		             		<text v-if="currentcanzhuo" >{{currentcanzhuo.num}}号桌菜品</text>
-		             		<text v-else >未入座</text>
-		             	</view>
-		             	<uni-grid v-if="currentcanzhuo && currentcanzhuo.foods" :column="3" :showBorder="false"  :square="false">
-		             		<uni-grid-item  v-for="canzhuo_food in currentcanzhuo.foods">
-		             			<view  class="item" >
-		             				<image  :src="canzhuo_food.imageurl"></image>
-		             				<text>{{canzhuo_food.count +canzhuo_food.unit+ canzhuo_food.label}}</text>
-		             				<image v-if="canzhuo_food.isfinish" class="finishimg" src="/static/imgs/foodfinish.png"></image>
-		             			</view>
-		             		</uni-grid-item>
-		             	</uni-grid>
-		             </view>   -->
-			</scroll-view>
-		
+	<view>
+		<view class="top">
+			<view @click="screenCanZhuoClick(item)" :class="item.isactive?'acitve '+ item.value: item.value"
+				v-for="item in screenCanZhuoArray" :key="item.label">
+				<text>{{item.label}}</text>
+			</view>
+
+		</view>
+		<scroll-view class="mainscroll" scroll-y="true">
+			<view class="list" v-if="isshowdata">
+				<view v-if="showcanzhuonummap[index+1]" class="item" v-for="(canzhuonum,index) in canzhuomax"
+					:key="index" @click="canZhuoInfo(index+1)">
+					<view class="zhuonum"><text>{{index+1}}号桌</text></view>
+					<view>
+						<image mode="aspectFill" v-if="!canzhuonummap[index+1]" src="/static/images/canzhuo_wait.png">
+						</image>
+						<image mode="aspectFill" v-else-if="canzhuonummap[index+1].ischeckout"
+							src="/static/images/foodfinish.png"></image>
+						<image mode="aspectFill" v-else-if="canzhuonummap[index+1].isfoodover"
+							src="/static/images/canzhuo_finish.png"></image>
+						<image mode="aspectFill" v-else src="/static/images/canzhuo_ing.png"></image>
+					</view>
+					<view class="peoplecount" v-if="canzhuonummap[index+1]">
+						<text>{{canzhuonummap[index+1].peopletotal}}人</text>
+					</view>
+				</view>
+			</view>
+
+
+		</scroll-view>
+	</view>
+
+
 
 </template>
 
 <script>
 	import canZhuoApi from '@/api/canZhuoApi.js'
+	import canZhuoFoodApi from '@/api/canZhuoFoodApi.js'
 	export default {
 		data() {
 			return {
-				 scrollTop: 0,
-				old: {
-					scrollTop: 0
-				},
-				currentcanzhuo:"",//当前餐桌
-				canzhuomax:10,//总共餐桌数量
-				canzhuonummap:{},
-				canzhuoArray:[
-					{id:1,num:1,peoplecount:4,isfinish:false,foods:[
-						{id:2,isfinish:true, count:"4",label:"羊肉汤",unit:"斤",describe:"",price:100,imageurl:"https://qcloud.dpfile.com/pc/9CTG3egYVhA4qDEGPZysOWm-CMHWxdqKtHOfGwwz2KJ3SQvBEuZcM3cJ5XDTpMvP5g_3Oo7Z9EXqcoVvW9arsw.jpg"},
-						{id:1,isfinish:false,count:"1",label:"牛肉",unit:"份",describe:"",price:38,imageurl:"https://qcloud.dpfile.com/pc/EgOYGoX6cUY42YoeOsr3gBzxSl7EJ-GEy_OaLloqJuVzMT5nCQRqO7l_onbFDiHq5g_3Oo7Z9EXqcoVvW9arsw.jpg"},
-						{id:3,isfinish:false,count:"1",label:"鸭肠",unit:"份",describe:"",price:22,imageurl:"https://qcloud.dpfile.com/pc/3HHHfRFJIXkCc2NNVj3yENqeSoFGZUw_rfmojNWPSe6umY1XpOkGMGNh02O5O4g-5g_3Oo7Z9EXqcoVvW9arsw.jpg"},
-						{id:4,isfinish:false,count:"1",label:"鹅肠",unit:"份",describe:"",price:22,imageurl:"https://p1.meituan.net/poirichness/menu_808644_446406954.jpg@130w_130h_1e_1c"},
-						{id:5,isfinish:false,count:"1",label:"金针菇",unit:"份",describe:"",price:10,imageurl:"https://p1.meituan.net/shaitu/99dd843cacf39925b39f8a60058a9c9a1497525.jpg"},
-						{id:5,isfinish:false,count:"1",label:"金针菇",unit:"份",describe:"",price:10,imageurl:"https://p1.meituan.net/shaitu/99dd843cacf39925b39f8a60058a9c9a1497525.jpg"},
-						{id:5,isfinish:false,count:"1",label:"金针菇",unit:"份",describe:"",price:10,imageurl:"https://p1.meituan.net/shaitu/99dd843cacf39925b39f8a60058a9c9a1497525.jpg"},
-						{id:5,isfinish:false,count:"1",label:"金针菇",unit:"份",describe:"",price:10,imageurl:"https://p1.meituan.net/shaitu/99dd843cacf39925b39f8a60058a9c9a1497525.jpg"},
-					]},
-					{id:1,num:3,peoplecount:2,isfinish:true},
-					{id:1,num:8,peoplecount:6,isfinish:false},
-					{id:1,num:9,peoplecount:6,isfinish:true},
-				]
+				screenCanZhuoArray: [{
+						label: "空桌",
+						value: "kongzhuo",
+						isactive: false
+					},
+					{
+						label: "正在上菜",
+						value: "shangcai",
+						isactive: false
+					},
+					{
+						label: "菜品上齐",
+						value: "shangqi",
+						isactive: false
+					},
+					{
+						label: "已结账",
+						value: "jiezhang",
+						isactive: false
+					},
+				],
+				isshowdata: false,
+				canzhuomax: 10, //总共餐桌数量
+				showcanzhuonummap: {},
+				canzhuonummap: {},
+				canzhuoArray: []
 			}
 		},
 		created() {
-			this.canzhuonummap = this.$Tool.groupByAttributeSingle(this.canzhuoArray,"num");
-			//console.log(this.canzhuonummap);
-			this.currentcanzhuo = this.canzhuoArray[0];
+
 			this.init();
 		},
+		onPullDownRefresh() {
+			this.init();
+			uni.stopPullDownRefresh();
+		},
 		methods: {
-			init(){
+			init() {
 				this.findcanZhuoCount();
 				this.findCanZhuoState();
 			},
 			//查找总桌数
-			findcanZhuoCount(){
-				canZhuoApi.getCanZhuoCount().then(canzhuocount=>{
-					if(canzhuocount){
+			findcanZhuoCount() {
+				canZhuoApi.getCanZhuoCount().then(canzhuocount => {
+					if (canzhuocount) {
 						//console.log(1,canzhuocount)
 						this.canzhuomax = canzhuocount * 1;
 					}
 				});
 			},
 			//查找所有餐桌的状态及人数
-			findCanZhuoState(){
+			findCanZhuoState() {
+				this.isshowdata = false;
 				canZhuoApi.findCanZhuoHomeData()
-					.then(datas=>{
-						console.log(datas);
+					.then(canzhuoArray => {
+						this.canzhuoArray = canzhuoArray;
+						this.canzhuonummap = this.$Tool.groupByAttributeSingle(canzhuoArray, "canzhuonum");
+						let idArray = [];
+						canzhuoArray.forEach(item => {
+							idArray.push(item.id);
+						});
+						//console.log("idArray",idArray);
+						canZhuoFoodApi.findcanzhuofoodbycanzhuoid(idArray).then(canfoodarray => {
+							canZhuoApi.computedCanZhuoFood(canzhuoArray, canfoodarray);
+							//this.isshowdata = true;
+							this.screenCanZhuoClick();
+						})
 					});
 			},
-			canZhuoInfo(canzhuonum){
-				this.currentcanzhuo = this.canzhuonummap[canzhuonum];
-				if(!this.currentcanzhuo){
-					this.currentcanzhuo = "";
+
+			canZhuoInfo(canzhuonum) {
+				let canzhuo = this.canzhuonummap[canzhuonum];
+				if (canzhuo) {
+					let url = "/pages/canZhuo/canZhuoFood?canzhuoid=" + canzhuo.id;
+					uni.navigateTo({
+						url
+					})
+				} else {
+					uni.showToast({
+						title: "不要着急",
+						icon: "none"
+					})
 				}
-				let url = "/pages/canZhuo/canZhuoFood?canzhuonum="+canzhuonum;
-				uni.navigateTo({
-					url
-				})
-				console.log("canzhuonummap",this.canzhuonummap[canzhuonum]);
+
+
 			},
 			//点击的餐桌
-			showNoCanZhuo(canzhuonum){
+			showNoCanZhuo(canzhuonum) {
 				uni.showToast({
-					title:canzhuonum+"号桌无人",
-					icon:"none"
+					title: canzhuonum + "号桌无人",
+					icon: "none"
 				})
+			},
+			screenCanZhuoClick(item) {
+
+				if (item) {
+					item.isactive = !item.isactive;
+				}
+				this.isshowdata = false;
+				let showcanzhuonummap = this.showcanzhuonummap;
+				let flag = false;
+				for (var i = 0; i < this.canzhuomax ; i++) {
+					let canzhuonum = i + 1 + "";
+					let canzhuo = this.canzhuonummap[canzhuonum];
+					showcanzhuonummap[canzhuonum] = false;
+					for (let screenCanZhuo of this.screenCanZhuoArray) {
+						//如果已经显示了，就不用看其他情况了
+						if (showcanzhuonummap[canzhuonum]) {
+							break;
+						}
+						//如果没有选择任何情况就所有的都不显示了
+						if(screenCanZhuo.isactive){
+							flag = true;
+						}
+						switch (screenCanZhuo.value) {
+							case "kongzhuo":
+								if (!canzhuo) {
+									showcanzhuonummap[canzhuonum] = screenCanZhuo.isactive;
+								}
+								break;
+							case "shangcai":
+								if (canzhuo && !canzhuo.isfoodover) {
+									showcanzhuonummap[canzhuonum] = screenCanZhuo.isactive;
+								}
+								break;
+							case "shangqi":
+								if (canzhuo && canzhuo.isfoodover) {
+									showcanzhuonummap[canzhuonum] = screenCanZhuo.isactive;
+								}
+								break;
+							case "jiezhang":
+								if (canzhuo && canzhuo.ischeckout) {
+									showcanzhuonummap[canzhuonum] = screenCanZhuo.isactive;
+								}
+								break;
+						
+					}
+
+				}
+				if(!flag){
+					//没有选择，就显示全部
+					for(let num in showcanzhuonummap){
+						showcanzhuonummap[num] = true;
+					}
+				}
 			}
-			
+			//console.log(showcanzhuonummap);
+			this.isshowdata = true;
 		}
+
+	}
 	}
 </script>
 
 <style lang="scss">
-	.mainscroll{
+	.mainscroll {
 		height: 100%;
-	}
-	.uni-grid-item {
-		.item{
+
+		.list {
 			display: flex;
-			flex-direction: column;
+			flex-wrap: wrap;
+
+			.zhuonum {
+				font-size: $uni-font-size-lg;
+				font-weight: 600;
+			}
+
+			.peoplecount {
+				margin-top: -35rpx;
+			}
+		}
+
+		.item {
 			text-align: center;
-			margin-top: 50rpx;
+			width: 25%;
+			margin-top: 40rpx;
+
 			image {
 				width: 100rpx;
-				height: 100rpx;margin: 0 auto;
+				height: 100rpx;
 			}
-			text {
-				font-size: $uni-font-size-lg;
-			}
-			.peoplecont{
-				position: relative;
-				top: -175rpx;
-			}
-			.zhuohao{
-				position: relative;
-				top: -15rpx;
-			}
-		}
-	}
-	.foodcontent{
-		margin-top: 50rpx;
-		min-height: 200rpx;
-		.title{
-			text{
-				font-size: 50rpx;
-				font-weight: 600;
-				margin-left: 50rpx;
-			}
-		}
-		.item{
-			font-size:  $uni-font-size-lg;
-			font-weight: 600;
-			.finishimg{
+
+			.finishimg {
 				position: relative;
 				top: -40rpx;
 				margin-top: -100rpx;
 			}
+		}
+	}
+
+	.top {
+		color: #333333;
+		height: 100rpx;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+
+		view {
+			width: 20%;
+			text-align: center;
+			border: 1px dashed #C0C0C0;
+			height: 60rpx;
+			line-height: 60rpx;
+		}
+
+		.acitve {
+			background-color: #DD524D;
+		}
+
+		.kongzhuo {
+			border: 3px solid #333333;
+		}
+
+		.shangcai {
+			border: 3px solid #DD524D;
+		}
+
+		.shangqi {
+			border: 3px solid #0f0;
+		}
+
+		.jiezhang {
+			background-image: url(../../static/images/foodfinish.png);
+			background-size: 100%;
 		}
 	}
 </style>

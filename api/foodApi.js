@@ -21,7 +21,7 @@ var updateFood =async function(food,filePath){
 
 	if(filePath){
 		let imgfile =await api.uploadFile({filePath:filePath,dir:"食物图片"});
-		food.imageurl = imgfile.path.replace(/\\/g,"/");
+		food.imageurl = "/"+imgfile.path.replace(/\\/g,"/");
 	}
 	let url = baseURL+"/update";
 	console.log(url);

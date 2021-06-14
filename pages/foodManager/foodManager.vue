@@ -140,6 +140,8 @@
 					imgfile = this.uploadAttr.imageValue[0];
 				}
 				let food = this.food;
+				console.log(1,imgfile);
+				
 				foodApi.updateFood(food,imgfile?imgfile.path:'').then(()=>{
 					uni.navigateBack({
 						delta:1

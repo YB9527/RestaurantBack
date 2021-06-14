@@ -11,7 +11,7 @@
 					 >
 					 	<text>{{foodtype.label}}</text>
 					 </view>
-					 <image src="/static/imgs/addsymbol.png" class="addType" @click="openAddTypeDialog"></image>
+					 <image src="/static/images/addsymbol.png" class="addType" @click="openAddTypeDialog"></image>
 				 </scroll-view>
 			</view>
 			<view class="right">

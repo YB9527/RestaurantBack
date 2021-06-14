@@ -2,6 +2,7 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			uni.vue = this;
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -17,5 +18,10 @@
 	page, uni-page-body {
 		height: 100%;
 		background-color: #F1F1F1;
+	}
+	.box {
+		border-radius: 15upx;
+		box-shadow: 0upx 5upx 20upx rgba(0, 0, 0, 0.1);
+		background-color: #FFFFFF;
 	}
 </style>

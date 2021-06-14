@@ -3,13 +3,13 @@
 		<uni-grid :column="3" :showBorder="false"  :square="false">
 		    <uni-grid-item >
 				<view class="item" @click="goto('/pages/canZhuo/canZhuo')">
-					<image  src="/static/logo.png"></image>
+					<image  src="/static/images/canzhuo_wait.png"></image>
 					<text class="text">餐桌界面</text>
 				</view>
 		    </uni-grid-item>
 		    <uni-grid-item >
 				<view class="item"  @click="goto('/pages/foodTypeManager/foodTypeManager')">
-					<image src="/static/logo.png"></image>
+					<image src="/static/images/food.png"></image>
 					<text class="text">菜类管理</text>
 				</view>
 		    </uni-grid-item>
@@ -21,10 +21,16 @@
 			</uni-grid-item>
 			<uni-grid-item >
 				<view class="item" @click="goto('/pages/restaurantConfig/restaurantConfig')">
-					<image src="/static/logo.png"></image>
+					<image src="/static/images/shop.png"></image>
 					<text class="text">店铺配置</text>
 				</view>
 				
+			</uni-grid-item>
+			<uni-grid-item >
+				<view class="item" @click="goto('/pages/business/business')">
+					<image src="/static/logo.png"></image>
+					<text class="text">历史餐桌</text>
+				</view>
 			</uni-grid-item>
 			<uni-grid-item >
 				<view class="item" @click="goto('/pages/business/business')">
@@ -35,7 +41,7 @@
 			<uni-grid-item>
 				<view class="item">
 					<image src="/static/logo.png"></image>
-					<text class="text">文本</text>
+					<text class="text">骑手管理</text>
 				</view>
 			</uni-grid-item>
 		</uni-grid>
@@ -54,7 +60,7 @@
 		},
 		methods: {
 			goto(url){
-				console.log(url)
+				//console.log(url)
 				uni.navigateTo({
 				    url
 				});

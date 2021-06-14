@@ -9,12 +9,14 @@
 	    ,{
             "path" : "pages/canZhuo/canZhuo",
             "style": {
-            	"disableScroll":true
+            	"disableScroll":true,
+				"enablePullDownRefresh": true
             }
         } ,{
             "path" : "pages/canZhuo/canZhuoFood",
             "style": {
-            	"disableScroll":true
+            	"disableScroll":true,
+				"enablePullDownRefresh": true
             }
         }
         ,{
