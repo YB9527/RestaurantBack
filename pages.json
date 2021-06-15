@@ -56,7 +56,7 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "王氏羊肉",
+		"navigationBarTitleText": "王氏羊肉——管理员",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"style":{
