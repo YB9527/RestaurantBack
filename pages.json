@@ -9,33 +9,33 @@
 	    ,{
             "path" : "pages/canZhuo/canZhuo",
             "style": {
-            	"disableScroll":true,
+
 				"enablePullDownRefresh": true
             }
         } ,{
             "path" : "pages/canZhuo/canZhuoFood",
             "style": {
-            	"disableScroll":true,
 				"enablePullDownRefresh": true
             }
         }
         ,{
             "path" : "pages/foodTypeManager/foodTypeManager",
             "style": {
-            	"disableScroll":true
+            
+				 "enablePullDownRefresh": true
             }
         }
         ,{
             "path" : "pages/evaluateManger/evaluateManger",
            "style": {
-           	"disableScroll":true
+
            }
             
         }
         ,{
             "path" : "pages/business/business",
            "style": {
-           	"disableScroll":true
+  
            }
             
         }
@@ -50,7 +50,42 @@
             "path" : "pages/foodManager/foodManager",
            "style": {
            	"disableScroll":true
+			
            }
+            
+        },{
+           "path" : "pages/foodManager/foodList",
+           "style": {
+			 
+
+			"enablePullDownRefresh": true
+           }
+            
+        }
+        ,{
+            "path" : "pages/test/test",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "测试页面",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/iconPriview/iconPriview",
+		    "style" :                                                                                    
+		    {
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
             
         }
     ],

@@ -39,7 +39,7 @@
 				</view>
 			</uni-grid-item>
 			<uni-grid-item>
-				<view class="item">
+				<view class="item" @click="goto('/pages/test/test')">
 					<image src="/static/logo.png"></image>
 					<text class="text">骑手管理</text>
 				</view>

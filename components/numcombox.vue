@@ -1,11 +1,11 @@
 <template>
 	<view  class="countset">
-		<view class="menu-add"  >
+		<view class="menu-add"  v-if="data[prop]">
 			<image v-show="data[prop] !== min" mode="aspectFill" @click="setCount(data,-1)" src="/static/images/subtract.png">
 		</view>
 		
-		<input v-if="unit == 0" class="input" v-model="data[prop]" type="number" />
-		<text v-else> {{data[prop]}}</text>
+		<input v-if="unit == 0 &&  data[prop]" class="input" v-model="data[prop]" type="number" />
+		<text v-else-if="data[prop]"> {{data[prop]}}</text>
 		<view class="menu-add">
 			<image mode="aspectFill" @click="setCount(data,1)" src="/static/images/icon_add.png">
 		</view>

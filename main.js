@@ -12,6 +12,8 @@ import Api from '@/api/api.js'
 Vue.prototype.$Api = Api;
 
 
+import $mRouter from '@/utils/router';
+Vue.prototype.$mRouter = $mRouter;
 			
 Vue.filter('foodUnitFilter',unit=>{
 	let str = unit;

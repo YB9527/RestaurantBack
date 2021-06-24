@@ -9,6 +9,11 @@ var saveFoodType = function(foodtype){
 }
 exports.saveFoodType = saveFoodType;
 
+var updateFoodType = function(foodtype){
+	let url = baseURL+"/update";
+	return api.requestPOST({url,data:foodtype});
+}
+exports.updateFoodType = updateFoodType;
 
 var findAll = function(){
 	let url = baseURL+"/findall";
@@ -22,3 +27,11 @@ var deleteFoodType = function(foodtype){
 	return api.requestPOST({url,data:foodtype});
 }
 exports.deleteFoodType = deleteFoodType;
+
+
+var findallandfoodcount = function(){
+	let url = baseURL+"/findallandfoodcount";
+	return api.requestGET({url});
+}
+exports.findallandfoodcount = findallandfoodcount;
+

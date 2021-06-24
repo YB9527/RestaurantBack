@@ -13,6 +13,7 @@
 				</view>
 				
 			</view>
+			
 			<view class="item">
 				<text class="label">食物名称</text>
 				<input type="text" v-model="food.label" placeholder="请输入名称" />
@@ -21,27 +22,12 @@
 				<text class="label">价格￥</text>
 				<input type="number"  v-model="food.price" placeholder="请输入价格" />
 			</view>
-			<view class="item">
-				<text class="label">售卖单位</text>
-				<ld-select :list="unitarray" label-key="label" value-key="value" placeholder="请选择" v-model="food.unit"
-					@change="unitSelectChange"></ld-select>
-			</view>
-			<view class="item">
-				<text class="label">状态</text>
-				<ld-select :list="foodstatearray" label-key="label" value-key="value" placeholder="请选择" v-model="food.state"
-					@change="selectChange"></ld-select>
-			</view>
+			
+			
 		</view>
 		
 		
-		<view :class="food.id?'twobtnview':'onebtnview'">
-			<button v-if="food.id" type="primary" @click="updateFood()">修改</button>
-			<button v-else type="primary" @click="addFood()">新增</button>
-			<button v-if="food.id" type="warn" @click="deleteFood()">删除</button>
-		</view>
-		<uni-popup ref="popup" type="dialog">
-		   <uni-popup-dialog mode="base" content="确认要删除吗？"   @confirm="deleteConfirm"></uni-popup-dialog>
-		</uni-popup>
+		
 	</view>
 </template>
 
@@ -119,7 +105,7 @@
 					//console.log(food);
 					this.food = food;
 					let url =  this.$Api.imgpriewurl+food.imageurl;
-					//console.log(url);
+					console.log(url);
 					this.uploadAttr.imageValue.push({path:url});
 				});
 			},
@@ -157,8 +143,8 @@
 				 this.$refs.popup.open();
 			},
 			deleteConfirm(){
-				this.food.isdelete = 1;
-				foodApi.updateFood(this.food)
+				
+				foodApi.deleteFood(this.food)
 					.then(res=>{
 						console.log(res);
 						uni.navigateBack({
@@ -188,6 +174,7 @@
 
 <style lang="scss">
 	.foodmanager {
+		
 		padding: 20rpx;
 		background-color: #FFFFFF;
 		height: 100%;
@@ -209,18 +196,10 @@
 				margin-right: 50rpx;
 			}
 		}
-		.imgitem{
-			height: 200rpx;
-			margin-bottom: 60rpx;
-			/* #ifndef H5 */
-			.imgcontent{
-				position: relative;
-				top: -30rpx;
-				left: 250rpx;
-			}
-			/* #endif */
-			
+		.imgcontent{
+			margin-top: 20rpx;
 		}
+		
 		.main{
 			margin-top: 10rpx;
 			
@@ -230,15 +209,7 @@
 			padding: 0 50rpx;
 
 		}
-		.twobtnview{
-			margin-top: 50rpx;
-			padding: 0 50rpx;
-			display: flex;
-			justify-content: space-between;
-			button{
-				width: 300rpx;
-			}
-		}
+		
 		uni-input{
 			height: 100%;
 		}

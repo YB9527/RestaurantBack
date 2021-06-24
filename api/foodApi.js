@@ -8,7 +8,7 @@ var baseURL = api.baseURL+"/food";
  */
 var saveFood =async function(food,filePath){
 	if(filePath){
-		let imgfile =await api.uploadFile({filePath:filePath,dir:"食物图片"});
+		let imgfile =await api.uploadFile({filePath:filePath,dir:"foodimage"});
 		food.imageurl = imgfile.path.replace(/\\/g,"/");
 	}
 	let url = baseURL+"/add";
@@ -20,7 +20,7 @@ exports.saveFood = saveFood;
 var updateFood =async function(food,filePath){
 
 	if(filePath){
-		let imgfile =await api.uploadFile({filePath:filePath,dir:"食物图片"});
+		let imgfile =await api.uploadFile({filePath:filePath,dir:"foodimage"});
 		food.imageurl = "/"+imgfile.path.replace(/\\/g,"/");
 	}
 	let url = baseURL+"/update";
@@ -30,14 +30,16 @@ var updateFood =async function(food,filePath){
 exports.updateFood = updateFood;
 
 
-var findAll = function(foodtype){
+var findAll = function(){
 	let url = baseURL+"/findall";
 	console.log(url)
 	return api.requestGET({url});
 }
 exports.findAll = findAll;
 
-
+/**查找没有被删除的食物
+ * @param {Object} foodtypeid
+ */
 var findFoodByTypeId = function(foodtypeid){
 	let url = baseURL+"/findfoodbytypeid?foodtypeid="+foodtypeid;
 	//console.log(url)
