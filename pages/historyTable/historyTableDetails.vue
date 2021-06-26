@@ -77,6 +77,10 @@
 			this.canzhuonum = option.canzhuonum;
 			this.init();
 		},
+		onPullDownRefresh() {
+			this.init();
+			uni.stopPullDownRefresh();
+		},
 		methods:{
 			async init(){
 				let canzhuonum = this.canzhuonum;

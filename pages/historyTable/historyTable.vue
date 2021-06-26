@@ -71,7 +71,7 @@
 				//查询以餐桌为主体的就餐量
 				let canzhuoArray  = await canZhuoApi.historytablestatistics();
 				this.canzhuoArray = canzhuoArray;
-				console.log(canzhuoArray);
+				//console.log(canzhuoArray);
 			},
 			//到餐桌详情
 			gotoHistoryDetails(canzhuo){

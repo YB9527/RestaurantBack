@@ -11,6 +11,8 @@ Vue.prototype.$Tool = Tool;
 import Api from '@/api/api.js'
 Vue.prototype.$Api = Api;
 
+import sysApi from '@/api/sysApi.js'
+Vue.prototype.$SysApi = sysApi;
 
 import $mRouter from '@/utils/router';
 Vue.prototype.$mRouter = $mRouter;

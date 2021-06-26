@@ -161,14 +161,35 @@ exports.pushArray = pushArray;
 
 
 var str2Date = function (strTime) {
-
   var  date = strTime.replace(/-/g,'/');
   var timestamp = new Date(date).getTime();
 // 根据毫秒数构建 Date 对象
   return new Date(timestamp);
-
 };
 exports.str2Date = str2Date;
+
+var str2DateDay = function (strTime) {
+  var  date = strTime.substring(0,10);
+  var timestamp = new Date(date).getTime();
+// 根据毫秒数构建 Date 对象
+  return new Date(timestamp);
+};
+exports.str2DateDay = str2DateDay;
+
+function dateChange(num = 1,date = false) {
+　　if (!date) {
+　　　　date = new Date();//没有传入值时,默认是当前日期
+　　　　date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+　　}else{
+		date = date2Str(date);
+		date = str2Date(date);
+	}
+　　date = Date.parse(new Date(date))/1000;//转换为时间戳
+　　date += (86400) * num;//修改后的时间戳
+　　var newDate = new Date(parseInt(date) * 1000);//转换为时间
+　　return date2Str(newDate);
+}
+exports.dateChange = dateChange;
 
 var date2Str = function (date) {
   if(! (date instanceof  Date)){
@@ -176,7 +197,13 @@ var date2Str = function (date) {
   }
   var year = date.getFullYear(); //获取完整的年份(4位,1970-????)
   var month =date.getMonth() + 1; //获取当前月份(0-11,0代表1月)
+  if(month < 10){
+	  month = "0"+ month;  
+  }
   var day = date.getDate(); //获取当前日(1-31)
+  if(day < 10){
+  	  day = "0"+ day;  
+  }
   var dateString =  year + "-" + month + "-" + day;
   return dateString;
 };
@@ -219,3 +246,37 @@ var copy =  function(data) {
 	}
 }
 exports.copy = copy;
+
+//计算相差的月份
+var computedMonth = function(start,end){
+	var date2Mon;
+	var startDate=start.getDate()+start.getHours()/24+start.getMinutes()/24/60;
+	var endDate=end.getDate()+end.getHours()/24+end.getMinutes()/24/60;
+	if(endDate>=startDate){
+		date2Mon=0;
+	}else{
+		date2Mon=-1;
+	}
+	return (end.getYear()-start.getYear())*12+end.getMonth()-start.getMonth()+date2Mon;
+}
+exports.computedMonth = computedMonth;
+
+
+var checkMonth = function (i) {
+    if (i<10){
+        i="0" + i;
+    }
+    return i;
+}
+
+var addMonth = function(num,start){
+	start = str2Date(date2Str(start));
+	let lastDate = start.setMonth(start.getMonth() + num); // 输出日期格式为毫秒形式1551398400000
+	 
+	lastDate = new Date(lastDate);
+	let lastYear = lastDate.getFullYear();
+	let lastMonth = checkMonth(lastDate.getMonth() + 1);
+	lastDate = lastYear + '-' + lastMonth;
+	return lastDate;
+}
+exports.addMonth = addMonth;

@@ -66,6 +66,10 @@
 			this.canzhuoid = option.canzhuoid;
 			this.init();
 		},
+		onPullDownRefresh() {
+			this.init();
+			uni.stopPullDownRefresh();
+		},
 		methods:{
 			async init(){
 				let canzhuoid = this.canzhuoid;
