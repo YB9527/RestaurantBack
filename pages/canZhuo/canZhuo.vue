@@ -13,13 +13,13 @@
 					:key="index" @click="canZhuoInfo(index+1)">
 					<view class="zhuonum"><text>{{index+1}}号桌</text></view>
 					<view>
-						<image mode="aspectFill" v-if="!canzhuonummap[index+1]" src="/static/images/canzhuo_wait.png">
+						<image mode="aspectFill" v-if="!canzhuonummap[index+1]" src="/static/images/free.png">
 						</image>
 						<image mode="aspectFill" v-else-if="canzhuonummap[index+1].ischeckout"
-							src="/static/images/foodfinish.png"></image>
+							src="/static/images/checkout2.png"></image>
 						<image mode="aspectFill" v-else-if="canzhuonummap[index+1].isfoodover"
-							src="/static/images/canzhuo_finish.png"></image>
-						<image mode="aspectFill" v-else src="/static/images/canzhuo_ing.png"></image>
+							src="/static/images/dishfinish.png"></image>
+						<image mode="aspectFill" v-else src="/static/images/dish.png"></image>
 					</view>
 					<view class="peoplecount" v-if="canzhuonummap[index+1]">
 						<text>{{canzhuonummap[index+1].peopletotal}}人</text>
@@ -70,7 +70,9 @@
 			}
 		},
 		created() {
-
+			
+		},
+		onShow() {
 			this.init();
 		},
 		onPullDownRefresh() {
@@ -114,7 +116,7 @@
 			canZhuoInfo(canzhuonum) {
 				let canzhuo = this.canzhuonummap[canzhuonum];
 				if (canzhuo) {
-					let url = "/pages/canZhuo/canZhuoFood?canzhuoid=" + canzhuo.id;
+					let url = "/pages/canZhuo/canZhuoFood?canzhuonum=" + canzhuonum;
 					uni.navigateTo({
 						url
 					})
@@ -209,17 +211,16 @@
 			}
 
 			.peoplecount {
-				margin-top: -35rpx;
+				margin-top: -6rpx;
 			}
 		}
 
 		.item {
 			text-align: center;
 			width: 25%;
-			margin-top: 40rpx;
+			margin-top: 50rpx;
 
-			image {
-				width: 100rpx;
+			image{			width: 100rpx;
 				height: 100rpx;
 			}
 
@@ -251,19 +252,19 @@
 		}
 
 		.kongzhuo {
-			border: 3px solid #333333;
+		
 		}
 
 		.shangcai {
-			border: 3px solid #DD524D;
+			
 		}
 
 		.shangqi {
-			border: 3px solid #0f0;
+			
 		}
 
 		.jiezhang {
-			background-image: url(../../static/images/foodfinish.png);
+			
 			background-size: 100%;
 		}
 	}

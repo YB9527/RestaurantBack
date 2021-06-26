@@ -16,12 +16,17 @@
 		},
 		methods:{
 			checkLogin(){
+				
 				//检查当前的网页是否需要登录
+				//var url = window.location.pathname;
+				//var search =  window.location.search;
+				
 				let routeMap = this.$mRouter.routeMap;
 				for(let key in routeMap){
 					let route = routeMap[key];
 					if(route.path === url){
-						if( !this.forcedLogin){
+						
+						if(route.requiresAuth && !userApi.token){
 							userApi.storageLogin().then().catch(e=>{
 								this.$mRouter.navigateTo("login");
 							});
@@ -34,7 +39,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	// 导入colorUI
 	@import '/static/css/colorui/main.css';
 	@import '/static/css/colorui/icon.css';
@@ -46,8 +51,8 @@
 	/*#ifndef MP*/
 	@import url('https://at.alicdn.com/t/font_1823374_98c45zxwb3c.css');
 	/*#endif*/
-	@import '/static/css/reset.scss';
-	@import '/static/css/uni.scss';
+	@import './static/css/reset.scss';
+	@import './static/css/uni.scss';
 	/*每个页面公共css */
 	page, uni-page-body {
 		height: 100%;

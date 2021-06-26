@@ -260,14 +260,12 @@
 		padding: 5px;
 	}
 
-	.files__image {
-		width: 40px;
+	.files__image{		width: 40px;
 		height: 40px;
 		margin-right: 10px;
 	}
 
-	.header-image {
-		width: 100%;
+	.header-image{		width: 100%;
 		height: 100%;
 	}
 
@@ -276,8 +274,7 @@
 		border-radius: 5px;
 	}
 
-	.is-text-image {
-		width: 25px;
+	.is-text-image{		width: 25px;
 		height: 25px;
 		margin-left: 5px;
 	}

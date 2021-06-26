@@ -371,8 +371,7 @@
 		opacity: 1;
 	}
 
-	.fab-content .fab-item .content-image {
-		width: 50rpx;
+	.fab-content .fab-item .content-image{		width: 50rpx;
 		height: 50rpx;
 		margin-bottom: 5rpx;
 	}

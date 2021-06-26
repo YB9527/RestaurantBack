@@ -20,14 +20,21 @@
 						</view>
 					</view>
 					<view class="bottom">
-						<text >状态：</text>
+
+						<view class="label"><text >状态：</text></view>
 						<text :class="'foodstate'+food.state">{{food.state | foodStateFilter}}</text>
 					</view>
-					<view class="bottom">
-						<text>销量：{{food.countsum?food.countsum:0}}{{food.unit | foodUnitFilter}}</text>
+					<view class="bottom row">
+						
+						<view class="label"><text >销量：</text></view>
+						<text class="value">{{food.countsum?food.countsum:0}}{{food.unit | foodUnitFilter}}</text>
+					
 					</view>
 					<view class="bottom sprow">
-						<text>金额：￥{{food.countsum*food.price}}</text>
+						<view class="row">
+							<view class="label"><text >销售金额：</text></view>
+							<text class="value">￥{{food.countsum*food.price}}</text>
+						</view>
 						<view class="switch row" v-if="isedit">
 							<view @click="itemMove(index,-1)" v-if="index != 0"><text class="cuIcon-fold"> </text></view>
 							<view @click="itemMove(index,+1)" v-if="index != foodArray.length-1"> <text  class="cuIcon-unfold"></text></view>
@@ -173,6 +180,7 @@
 	
 		}
 	}
+	
 	.foodlist{
 		padding: 20rpx;
 		width: 100%;
@@ -189,11 +197,17 @@
 					margin-bottom: 20rpx;
 					width: 100%;
 					display: flex;
-					image {
-						width: 200rpx;
+					image{						width: 200rpx;
 						height: 200rpx;
 						border-radius: 4px;
 						margin-right: 10rpx;
+					}
+					/* .label{
+						width: 140rpx;
+						text-align: right;
+					} */
+					.row{
+						
 					}
 					.foodstate0{
 						color: $uni-color-error;

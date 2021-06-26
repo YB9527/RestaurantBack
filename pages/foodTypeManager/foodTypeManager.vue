@@ -37,18 +37,21 @@
 				@trigger="trigger"
 			></uni-fab>
 		</view>
-			
-		<uni-popup ref="popup" type="dialog" :animation="false" >
-		    <uni-popup-dialog :title="dialog.title" placeholder="请输入食物类型" @confirm="addFodType"  mode="input"   :value="dialog.foodtype.label"></uni-popup-dialog>
-		</uni-popup>
+		
+		<inputdialog  ref="dialog":dialog="dialog" @confirm="addFodType"></inputdialog>
+		<!-- <uni-popup v-if="popshow" ref="popup" type="dialog" :animation="false" >
+		   <uni-popup-dialog :title="dialog.title" placeholder="请输入食物类型" @confirm="addFodType"  mode="input"   :value="dialog.foodtype.label"></uni-popup-dialog>
+		</uni-popup> -->
 		
 	</view>
 </template>
 
 <script>
-		import foodTypeApi from '@/api/foodTypeApi.js'
-		import foodApi from '@/api/foodApi.js'
+	import foodTypeApi from '@/api/foodTypeApi.js'
+	import foodApi from '@/api/foodApi.js'
+	import inputdialog from '@/components/inputDialog.vue'
 	export default {
+		components:{inputdialog},
 		data() {
 			return {
 				content:[
@@ -117,7 +120,7 @@
 				this.isedit = false;
 				let foodtypeList = await foodTypeApi.findallandfoodcount();
 				this.foodtypeList = foodtypeList;
-				console.log(foodtypeList);
+				//console.log(foodtypeList);
 			},
 			//保存编辑
 			async editOk(){
@@ -151,28 +154,36 @@
 			},
 			//打开添加食物类型的窗口
 			openAddTypeDialog(){
+				
 				let dialog = this.dialog;
 				dialog.isadd = true;
 				this.dialog.title = this.dialog.isadd?this.dialog.addtitle:this.dialog.edittitle;
 				let foodType = {label:"",seq:this.foodtypeList.length};
 				this.dialog.foodtype=foodType;
-				this.$refs.popup.open();
+				dialog.value = "";
+				this.$refs.dialog.open();
+				
+				console.log(1,dialog.show);
 			},
 			trigger(item){
-				switch(item.index){
-					case 0:
-						this.isedit = !this.isedit;
-						break;
-					case 1:
-						this.openAddTypeDialog();
-						break;
-				}
+				
+					switch(item.index){
+						case 0:
+							this.isedit = !this.isedit;
+							break;
+						case 1:
+							this.openAddTypeDialog();
+							break;
+					}
+				
+				
 				
 			},
 			/**
 			 * 添加食物类型
 			 */
 			async addFodType(newtypevalue){
+				
 				//foodtype/add
 				let foodtype = this.dialog.foodtype;
 				foodtype.label = newtypevalue;
@@ -198,12 +209,15 @@
 				
 			},
 			editType(foodtype){
+				
 				let dialog = this.dialog;
 				dialog.isadd = false;
 				dialog.title = dialog.isadd?dialog.addtitle:dialog.edittitle;
 				dialog.foodtype =this.$Tool.copy(foodtype);
-				this.$refs.popup.open();
+				dialog.value = dialog.foodtype.label;
+				this.$refs.dialog.open();
 			},
+			
 			deleteType(typeid){
 				foodTypeApi.deleteFoodType({id:typeid})
 					.then(()=>{

@@ -6,7 +6,7 @@ export default {
 	defaultAuth:true,
 	auths:{
 		requiresAuth:[
-			{name: 'index',label:"点餐",path: '/pages/index/index',},
+			{name: 'index',label:"点餐",path: '/',},
 			{name: 'canZhuo',label:"餐桌",path: '/pages/canZhuo/canZhuo',},
 			{name: 'canZhuoFood',label:"餐桌上的食物",path: '/pages/canZhuo/canZhuoFood',},
 			{name: 'foodTypeManager',label:"食物类型管理",path: '/pages/foodTypeManager/foodTypeManager',},
@@ -16,6 +16,10 @@ export default {
 			{name: 'evaluateManger',label:"评论管理",path: '/pages/evaluateManger/evaluateManger',},
 			{name: 'business',label:"营业详情",path: '/pages/business/business',},
 			{name: 'restaurantConfig',label:"餐馆配置",path: '/pages/restaurantConfig/restaurantConfig',},
+			
+			{name: 'historyTable',label:"历史餐桌",path: '/pages/historyTable/historyTable',},
+			{name: 'historyTableDetails',label:"历史餐桌",path: '/pages/historyTable/historyTableDetails',},
+			{name: 'historyTableFood',label:"历史餐桌菜品详情",path: '/pages/historyTable/historyTableFood',},
 			
 			
 

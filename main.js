@@ -43,6 +43,22 @@ Vue.filter('foodStateFilter',state=>{
 	}
 	return str;
 });
+/**
+ * 计算用时分钟
+ */
+Vue.filter('minuteCompted',(start,end)=>{
+	if(typeof(start) === "string"){
+		start = Tool.str2Date(start);
+		
+	}
+	if(typeof(end) === "string"){
+		end = Tool.str2Date(end);
+	}
+	if(start && end){
+		return  Math.round((end - start)/1000/60);
+	}
+	return "";
+});
 
 
 const app = new Vue({

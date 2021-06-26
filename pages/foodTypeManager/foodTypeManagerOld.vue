@@ -296,8 +296,7 @@
 					padding: 20rpx;
 					width: 100%;
 					display: flex;
-					image {
-						width: 200rpx;
+					image{						width: 200rpx;
 						height: 200rpx;
 						border-radius: 4px;
 						margin-right: 10rpx;
@@ -435,8 +434,7 @@
 				padding: 20rpx;
 				width: 100%;
 				display: flex;
-				image {
-					width: 200rpx;
+				image{					width: 200rpx;
 					height: 200rpx;
 					border-radius: 4px;
 					margin-right: 10rpx;

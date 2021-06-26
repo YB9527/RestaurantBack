@@ -39,9 +39,7 @@
 			<button v-else type="primary" @click="addFood()">新增</button>
 			<button v-if="food.id" type="warn" @click="deleteFood()">删除</button>
 		</view>
-		<uni-popup ref="popup" type="dialog">
-		   <uni-popup-dialog mode="base" content="确认要删除吗？"   @confirm="deleteConfirm"></uni-popup-dialog>
-		</uni-popup>
+		 
 	</view>
 </template>
 

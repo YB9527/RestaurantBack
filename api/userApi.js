@@ -8,20 +8,24 @@
 
 import Api from './api';
 import Tool from '@/common/Tool';
-
+var token ="";
 
 
 
 
 
 var storageLogin = function(){
-	
 	return new Promise((resole,reject)=>{
 		let user = {};
 		uni.getStorage({
 			key: 'loginUser',
 			success(storage){
 				let user = storage.data;
+				if(login(user)){
+					resole();
+				}else{
+					reject();
+				}
 			},
 			fail(e) {
 				reject(e);
@@ -30,6 +34,21 @@ var storageLogin = function(){
 	})
 }
 exports.storageLogin = storageLogin;
+
+
+var login = function({account,password}){
+	if(account == "yb" && password == "123"){
+		uni.setStorage({
+		    key: 'loginUser',
+		    data: {account,password}
+		});
+		token = "123";
+		return true;
+	}
+	return false;
+	
+}
+exports.login = login;
 
 var loginOut = function(user){
 	user.password="";
@@ -41,3 +60,4 @@ var loginOut = function(user){
 	
 }
 exports.loginOut = loginOut;
+

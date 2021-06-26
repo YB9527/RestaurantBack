@@ -1,47 +1,83 @@
 <template>
-	<view class="foodcontent" v-if="showdata">
+	<view class="foodcontent" >
 		
-		<view>
-			<button type="primary" v-if="showsavebtn" @click="update">保存</button>
+		<!-- 有两个餐桌时才显示历史信息 -->
+		<view class="checoutlist">
+			<view class="checoutitem box" :class="canzhuo && canzhuo.id == canzhuotem.id?'canzhuoacitve':''"
+				v-if="canzhuoArray && canzhuoArray.length > 1"
+				v-for="canzhuotem in canzhuoArray" 
+				:key="canzhuotem.id"
+				@click="setCurrentCanZhuo(canzhuotem)">
+				<view class="row">
+					<text class="label">就餐：</text>
+					<text class="value">{{canzhuotem.date}}</text>
+				</view>
+				<view class="row">
+					<text class="label">结账： </text>
+					<text class="value">{{canzhuotem.checkdate}}</text>
+				</view>
+				<view class="row">
+					<text class="label ">支付金额： </text>
+					<text :class="canzhuotem.ischeckout?'':'price'" class="value">{{canzhuotem.finalcharge}}</text>
+				</view>
+			</view>
 		</view>
-		<view class="row graytext">
-			<view ><text>人数：</text> <text class="peoplecount">{{canzhuo.peopletotal}}</text></view>
-			<view><text>消费金额：￥</text><text class="money" :class="canzhuo.pricetotal !=canzhuo.finalcharge?'delmoney':'' ">{{canzhuo.pricetotal}}</text> </view>
-			<view @click="setMoney"><text>结算金额：￥</text><text class="money finalcharge"  >{{canzhuo.finalcharge}}</text> </view>
-		</view>
-		<view class="row ">
-			<view class="graytext"><text>用餐时间：{{canzhuo.date}} </text></view>
-			<view class="tip"><text >双击完成烹饪 </text></view>
-		</view>
-		<view class="row " >
+		<view  v-if="showdata">
 			<view>
-				<text class="graytext">结账情况:</text>
-				<text :class="canzhuo.ischeckout?'checkout':'nocheckout'">{{canzhuo.ischeckout?'已完成':'未结账'}}</text>
+				<button type="primary" v-if="showsavebtn" @click="update">保存</button>
 			</view>
-			<view >
-				<text>用餐完毕:</text>
-				 <switch @change="canzhuofinish" :checked="canzhuo.isfinish !=1 ?false:true" color="#4CD964" />
+			<view class="row ">
+				<view class="graytext"><text>用餐时间：{{canzhuo.date}} </text></view>
+				
 			</view>
-		</view>
-		<view class="list " >
-			<view class="box">
-				<view class="item" v-for="food in  canzhuo.canzhuofoodArray">
-					<view @longpress="editstate = !editstate" @click="finishfood(food)"> <image :src="food.baseimageurl"></image> </view>
-					<view >
-						<view :class="food.isfinish?'':'price'"><text>{{food.isfinish?"完成":'烹饪中...'}}</text></view>
-						<view><text>{{food.label}}</text></view>
-						
-						<view v-if="!editstate || canzhuo.isfinish"><text>{{food.count}}{{food.unit | foodUnitFilter}}</text></view>
-						<numcombox :unit="food.unit"  @change="foodCountChange" v-else class="countset" :data="food" prop="count"></numcombox>
-						
-						<view ><text>￥{{food.pricetotal}}</text></view>
+			<view class="row graytext">
+				<view ><text>人数：</text> <text class="peoplecount">{{canzhuo.peopletotal}}</text></view>
+				<view><text>消费金额：￥</text><text class="money" :class="canzhuo.pricetotal !=canzhuo.finalcharge?'delmoney':'' ">{{canzhuo.pricetotal}}</text> </view>
+				<view @click="setMoney"><text>结算金额：￥</text><text :class="canzhuo.ischeckout?'':'finalcharge'" class="money "  >{{canzhuo.finalcharge}}</text> </view>
+			</view>
+			
+			
+			<view class="row " >
+				<view>
+					<text class="graytext">结账情况:</text>
+					<text :class="canzhuo.ischeckout?'checkout':'nocheckout'">{{canzhuo.ischeckout?'已完成':'未结账'}}</text>
+				</view>
+				<view >
+					<text>用餐完毕:</text>
+					 <switch @change="canzhuofinish"  :checked="canzhuo.isfinish !=1 ?false:true" color="#4CD964" />
+				</view>
+			</view>
+			<view class="row " v-if="!canzhuo.isfoodover">
+				<view class="graytext" >
+					<button  @click="finishAllFood" style="height: 60rpx;" size="mini" >完成所有菜品</button>
+				</view>
+				<view class="tip"><text >*双击图片完成菜品 </text></view>
+			</view>
+			<view class="list " >
+				<view class="box">
+					<view class="item" v-for="food in  canzhuo.canzhuofoodArray">
+						<view @longpress="editstate = !editstate" @click="finishfood(food)"> <image :src="food.baseimageurl"></image> </view>
+						<view >
+							<view :class="food.isfinish?'':'price'"><text>{{food.isfinish?"完成":'烹饪中...'}}</text></view>
+							<view><text>{{food.label}}</text></view>
+							
+							
+							<view class="countrow">
+								<view v-if="!editstate || canzhuo.isfinish"><text>{{food.count}}{{food.unit | foodUnitFilter}}</text></view>
+								<numcombox :unit="food.unit"  @change="foodCountChange" v-else class="countset" :data="food" prop="count"></numcombox>
+								
+								<view ><text>￥{{food.price * food.count}}</text></view>
+							</view>
+							
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		
-		<uni-popup ref="popup" type="dialog" :animation="false" >
-		    <uni-popup-dialog @confirm="setMoneyOk"  mode="input" message="成功消息" :duration="2000"></uni-popup-dialog>
+		
+		<uni-popup  ref="popup"  type="dialog"  >
+		    <uni-popup-dialog :animation="false" title="结算金额" @confirm="setMoneyOk" :value="canzhuo.finalcharge" mode="input" placeholder="请输入结算金额" :duration="2000"></uni-popup-dialog>
 		</uni-popup>
 		
 	</view> 
@@ -55,6 +91,8 @@
 		components:{numcombox},
 		data(){
 			return{
+				canzhuonum:"",
+				canzhuoArray:[],//一桌人结账几次会出现此情况
 				finalcharge:100,
 				showdata:false,
 				canzhuo:"",
@@ -64,27 +102,74 @@
 			}
 		},
 		onLoad(option) {
-			let canzhuoid = option.canzhuoid;
-			this.canzhuoid = canzhuoid;
-			//查询该餐桌
-			if(canzhuoid){
-				this.init(canzhuoid);
-			}
+			let canzhuonum = option.canzhuonum;
+			this.canzhuonum = canzhuonum;
+			
+			this.init();
 		},
-		onShow() {
-			let canzhuoid = this.canzhuoid;
-			if(canzhuoid){
-				this.init(canzhuoid);
-			}
-		},
+		/* onShow() {
+			
+			this.init();
+		}, */
 		 onPullDownRefresh() {
-		      let canzhuoid = this.canzhuoid;
-		      if(canzhuoid){
-		      	this.init(canzhuoid);
-				uni.stopPullDownRefresh();
-		      }
+		     
+			  this.init();
+			  uni.stopPullDownRefresh();
 		 },
 		methods:{
+			async init(){
+				this.showdata = false;
+				this.editstate = false;
+				this.showsavebtn = false;
+				let canzhuonum = this.canzhuonum;
+				let canzhuoArray = await canZhuoApi.findcanzhuoingbyzanzhuonum(canzhuonum);
+				this.canzhuoArray = canzhuoArray;
+				console.log(canzhuoArray)
+				 uni.setNavigationBarTitle({
+				    title: '王氏羊肉（'+canzhuonum+"号桌）"
+				});
+				if(canzhuoArray.length === 1){
+					this.findCanZhuoById(canzhuoArray[0].id);
+				}
+				
+				
+			},
+			setCurrentCanZhuo(canzhuo){
+				this.findCanZhuoById(canzhuo.id);
+			},
+			async findCanZhuoById(canzhuoid){
+				
+				this.showdata = false;
+				this.editstate = false;
+				this.showsavebtn = false;
+				let canzhuo = await canZhuoApi.findById(canzhuoid);
+				this.canzhuo = canzhuo;
+				//console.log(canzhuo)
+				
+				this.showdata = true;
+			},
+			/**
+			 * 完成所有菜品
+			 */
+			finishAllFood(){
+				//console.log(this.canzhuo);
+				let canzhuo = this.canzhuo;
+				let foodArray =  this.canzhuo.canzhuofoodArray;
+				uni.showModal({
+				    title: '提示',
+				    content: '确定炒完所有菜了？',
+				    success:  (res)=> {
+				        if (res.confirm) {
+							foodArray.forEach(food=>{
+								food.isfinish = 1;
+							 })
+							 canZhuoFoodApi.update(foodArray);
+							 canzhuo.isfoodover = 1;
+				        }
+				    }
+				});
+				
+			},
 			update(){
 				let canzhuo = this.canzhuo;
 				let self = this;
@@ -94,6 +179,7 @@
 					    content: '确定用餐完毕？'+(canzhuo.ischeckout?'':'还没有结账哦'),
 					    success:  (res)=> {
 					        if (res.confirm) {
+							  canzhuo.ischeckout = 1;
 					          self.updateOk();
 					        } else if (res.cancel) {
 					           canzhuo.isfinish  = 0;
@@ -143,6 +229,12 @@
 				});
 			},
 			setMoney(){
+				/* if(this.canzhuo.ischeckout){
+					uni.showToast({
+						title:"已结账不可以修改金额",
+					})
+					return ;
+				} */
 				 this.$refs.popup.open();
 			},
 			setMoneyOk(money){
@@ -165,21 +257,11 @@
 				this.showdata  =true;
 				this.showsavebtn = true;
 			},
-			async init(canzhuoid){
-				this.showdata = false;
-				this.editstate = false;
-				this.showsavebtn = false;
-				let canzhuo = await canZhuoApi.findById(canzhuoid);
-				this.canzhuo = canzhuo;
-				//console.log(canzhuo)
-				 uni.setNavigationBarTitle({
-				    title: '王氏羊肉（'+canzhuo.canzhuonum+"号桌）"
-				});
-				this.showdata = true;
-			},
-
+			
+			 
+			
 			// 双击
-			finishfood(food) {
+			async finishfood(food) {
 				
 			  let _this = this;
 			  let curTime = new Date().getTime();
@@ -189,10 +271,10 @@
 			  let diff = curTime - lastTime;
 			  if (diff < 300) {
 			   	food.isfinish  = 1;
-				this.showsavebtn = true;
+				//this.showsavebtn = true;
 			   	//保存到数据库中
-			   //	
-			 } 		
+			   await canZhuoFoodApi.update(food);
+			 }
 			},
 			foodCountChange(data){
 				let canzhuo = this.canzhuo;
@@ -206,6 +288,30 @@
 </script>
 
 <style lang="scss">
+	.checoutlist{
+		padding: 0 20rpx;
+		.canzhuoacitve{
+			border: 1px dashed #DD524D;
+			background-color: rgba($color: #aaffff, $alpha: 0.2);
+		}
+		.checoutitem{
+			padding: 20rpx 0;
+			margin-bottom: 20rpx;
+			.row{
+				display: flex;
+				justify-content: flex-start;
+			}
+		}
+		.price{
+			color:#DD524D;
+			font-weight:600;
+		}
+	}
+	
+	.countrow{
+		display: flex;
+		flex-wrap: wrap;
+	}
 	.foodcontent{
 		padding: 10rpx 0;
 	}
@@ -275,15 +381,17 @@
 				font-size: $uni-font-size-lg;
 				color: #333333;
 			}
+			
+			.countset{
+				width: 180rpx;
+				
+			}
 			.price{
+				
 				text{
 					color:#DD524D;
 					font-weight:600;
 				}
-				
-			}
-			.countset{
-				width: 180rpx;
 				
 			}
 		}

@@ -25,6 +25,13 @@ var findById = function(id){
 }
 exports.findById = findById;
 
+var findcanzhuoingbyzanzhuonum = function(canzhuonum){
+	let url = baseURL+"/canzhuo/findcanzhuoingbyzanzhuonum?canzhuonum="+canzhuonum;
+	return api.requestGET({url});
+	
+}
+exports.findcanzhuoingbyzanzhuonum = findcanzhuoingbyzanzhuonum;
+
 var setCanZhuoCount = function(canzhuocount){
 	
 	let url = baseURL+"/config/getzhuoshu";
@@ -117,3 +124,14 @@ exports.update = update;
 exports.computedFinalChargeById = computedFinalChargeById;
 
 
+ var historytablestatistics = function(){
+	let url = baseURL+"/canzhuo/historytablestatistics";
+	return api.requestGET({url});
+}
+exports.historytablestatistics = historytablestatistics;
+
+ var historytabledetailsByCanzhuonum = function(canzhuonum){
+	let url = baseURL+"/canzhuo/historytabledetails?canzhuonum="+canzhuonum;
+	return api.requestGET({url});
+}
+exports.historytabledetailsByCanzhuonum = historytabledetailsByCanzhuonum;

@@ -430,8 +430,7 @@
 		opacity: 1;
 	}
 
-	.uni-fab__item-image {
-		width: 25px;
+	.uni-fab__item-image{		width: 25px;
 		height: 25px;
 		margin-bottom: 3px;
 	}

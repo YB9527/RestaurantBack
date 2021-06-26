@@ -11,7 +11,6 @@ import userApi from '@/api/userApi.js'
 class Router {
 	constructor() {
 		this.routeMap={};
-		this.forcedLogin = false;
 		for (let key in routesconfig.auths) {
 			let routeArray = routesconfig.auths[key];
 			let requiresAuth;
@@ -42,20 +41,18 @@ class Router {
 	 * @param {Object} params 携带的参数
 	 */
 	jump(navType,key,params){
+		let self = this;
 		let route = this.routeMap[key];
+		if(!route){
+			console.log("没有配置路由："+key);
+		}
 		let url = this.objParseUrlAndParam(route.path,params);
 		 new Promise(resole=>{
 			 let flag = true;
 			if(route.requiresAuth){
-				if(!this.forcedLogin){
-					userApi.storageLogin()
-					.then((flag)=>{
-						
-						resole(flag);
-					})
-					.catch(e=>{
-						this.redirectTo("login");
-					});
+				if(!userApi.token){
+					//self.redirectTo("login");
+					resole(false);
 				}else{
 					resole(true);
 				}

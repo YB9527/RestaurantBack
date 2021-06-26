@@ -2,48 +2,48 @@
 	<view class="indexcontent">
 		<uni-grid :column="3" :showBorder="false"  :square="false">
 		    <uni-grid-item >
-				<view class="item" @click="goto('/pages/canZhuo/canZhuo')">
-					<image  src="/static/images/canzhuo_wait.png"></image>
-					<text class="text">餐桌界面</text>
+				<view class="item" @click="goto('canZhuo')">
+					<image  src="/static/images/store.png"></image>
+					<text class="text">餐厅</text>
 				</view>
 		    </uni-grid-item>
 		    <uni-grid-item >
-				<view class="item"  @click="goto('/pages/foodTypeManager/foodTypeManager')">
-					<image src="/static/images/food.png"></image>
+				<view class="item"  @click="goto('foodTypeManager')">
+					<image src="/static/images/foodmenu.png"></image>
 					<text class="text">菜类管理</text>
 				</view>
 		    </uni-grid-item>
 		    <uni-grid-item >
-				<view class="item" @click="goto('/pages/evaluateManger/evaluateManger')">
-					<image  src="/static/logo.png"></image>
+				<view class="item" @click="goto('evaluateManger')">
+					<image  src="/static/images/evaluate.png"></image>
 					<text class="text">评价管理</text>
 				</view>
 			</uni-grid-item>
 			<uni-grid-item >
-				<view class="item" @click="goto('/pages/restaurantConfig/restaurantConfig')">
+				<view class="item" @click="goto('restaurantConfig')">
 					<image src="/static/images/shop.png"></image>
 					<text class="text">店铺配置</text>
 				</view>
 				
 			</uni-grid-item>
 			<uni-grid-item >
-				<view class="item" @click="goto('/pages/business/business')">
-					<image src="/static/logo.png"></image>
+				<view class="item" @click="goto('historyTable')">
+					<image src="/static/images/history.png"></image>
 					<text class="text">历史餐桌</text>
 				</view>
 			</uni-grid-item>
 			<uni-grid-item >
-				<view class="item" @click="goto('/pages/business/business')">
-					<image src="/static/logo.png"></image>
+				<view class="item" @click="goto('business')">
+					<image src="/static/images/purse.png"></image>
 					<text class="text">营业详情</text>
 				</view>
 			</uni-grid-item>
-			<uni-grid-item>
+			<!-- <uni-grid-item>
 				<view class="item" @click="goto('/pages/test/test')">
 					<image src="/static/logo.png"></image>
 					<text class="text">骑手管理</text>
 				</view>
-			</uni-grid-item>
+			</uni-grid-item> -->
 		</uni-grid>
 	</view>
 </template>
@@ -59,11 +59,12 @@
 
 		},
 		methods: {
-			goto(url){
+			goto(urltag){
 				//console.log(url)
-				uni.navigateTo({
+				this.$mRouter.navigateTo(urltag);
+				/* uni.navigateTo({
 				    url
-				});
+				}); */
 			}
 		}
 	}
@@ -76,8 +77,7 @@
 			flex-direction: column;
 			text-align: center;
 			margin-top: 200rpx;
-			image {
-				width: 100rpx;
+			image{				width: 100rpx;
 				height: 100rpx;margin: 0 auto;
 			}
 			text {

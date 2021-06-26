@@ -139,8 +139,7 @@
 		background-color: #f5f5f5;
 	}
 
-	.uni-share-image {
-		width: 30px;
+	.uni-share-image{		width: 30px;
 		height: 30px;
 	}
 

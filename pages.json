@@ -28,20 +28,21 @@
         ,{
             "path" : "pages/evaluateManger/evaluateManger",
            "style": {
-
+				"navigationBarTitleText": "评价管理"
            }
             
         }
         ,{
             "path" : "pages/business/business",
            "style": {
-  
+				 "navigationBarTitleText": "营业详情"
            }
             
         }
         ,{
             "path" : "pages/restaurantConfig/restaurantConfig",
             "style": {
+				 "navigationBarTitleText": "店铺配置",
             	"disableScroll":true
             }
             
@@ -83,15 +84,42 @@
             "path" : "pages/login/login",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+               
                 "enablePullDownRefresh": false
             }
             
         }
+        ,{
+            "path" : "pages/historyTable/historyTable",
+            "style" :                                                                                    
+            {
+				 "navigationBarTitleText": "历史餐桌",
+                "enablePullDownRefresh": true
+            }
+            
+        },
+		{
+            "path" : "pages/historyTable/historyTableDetails",
+            "style" :                                                                                    
+            {
+				 "navigationBarTitleText": "历史餐桌详情",
+                "enablePullDownRefresh": true
+            }
+            
+        },
+		{
+		    "path" : "pages/historyTable/historyTableFood",
+		    "style" :                                                                                    
+		    {
+				 "navigationBarTitleText": "餐桌菜品详情",
+		        "enablePullDownRefresh": true
+		    }
+		    
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "王氏羊肉",
+		"navigationBarTitleText": "王氏羊肉后台",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"style":{

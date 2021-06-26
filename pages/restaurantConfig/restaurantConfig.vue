@@ -2,7 +2,7 @@
 	<view>
 		<view class="item">
 			<text>总共餐桌数量</text>
-			<input type="text" v-model="canzhuocount" placeholder="请输入1" />
+			<input type="text" v-model="canzhuocount" placeholder="请输入" />
 		</view>
 		<view class="onebtnview">
 			<button type="primary" @click="confirm">确定</button>
@@ -33,10 +33,11 @@
 					}
 				});
 			},
-			confirm(){
-				canZhuoApi.setCanZhuoCount(this.canzhuocount).then(res=>{
-					console.log(res);
-				});
+			async confirm(){
+				await canZhuoApi.setCanZhuoCount(this.canzhuocount);
+				uni.showToast({
+					title:"保存成功"
+				})
 			}
 		}
 	}
