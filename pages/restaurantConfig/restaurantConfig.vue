@@ -1,12 +1,19 @@
 <template>
 	<view>
 		<view class="item">
-			<text>总共餐桌数量</text>
-			<input type="text" v-model="canzhuocount" placeholder="请输入" />
+			<text>总共餐桌数量：</text>
+			<input type="text" v-model="store.canzhuocount" placeholder="请输入" />
 		</view>
-		<view class="onebtnview">
+		<view class="item">
+			<text>设置营业时间段：</text>
+			<input type="text" v-model="store.canzhuocount" placeholder="请输入" />
+		</view>
+		<!-- <view class="item">
+			<text>店铺名称：</text>
+			<input type="text" v-model="store.storename" placeholder="请输入" />
+		</view> -->
+		<view class="onebtnview" >
 			<button type="primary" @click="confirm">确定</button>
-		
 		</view>
 	</view>
 </template>
@@ -16,8 +23,7 @@
 	export default {
 		data() {
 			return {
-				canzhuocount:0,
-				
+				store:{},
 			}
 		},
 		onLoad() {
@@ -25,16 +31,25 @@
 		},
 		
 		methods: {
-			init(){
-				canZhuoApi.getCanZhuoCount().then(canzhuocount=>{
-					if(canzhuocount){
-						console.log(canzhuocount)
-						this.canzhuocount = canzhuocount;
-					}
+			async init(){
+				
+				uni.showLoading({
+					title:""
 				});
+				let store = await this.$StoreConfigApi.findConfig();
+				if (store) {
+					this.store = store;
+				}
+				uni.hideLoading();
 			},
 			async confirm(){
-				await canZhuoApi.setCanZhuoCount(this.canzhuocount);
+				let store = this.store;
+				if(store.id){
+					this.$StoreConfigApi.updateConfig(store);
+				}else{
+					this.$StoreConfigApi.addConfig(store);
+				}
+				
 				uni.showToast({
 					title:"保存成功"
 				})

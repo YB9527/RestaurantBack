@@ -8,12 +8,18 @@
 				v-for="canzhuotem in canzhuoArray" 
 				:key="canzhuotem.id"
 				@click="setCurrentCanZhuo(canzhuotem)">
-				<view class="row">
-					<text class="label">就餐：</text>
-					<text class="value">{{canzhuotem.date}}</text>
+				<view class="sprow">
+					<view class="row">
+						<text class="label">就餐时间：</text>
+						<text class="value">{{canzhuotem.date}}</text>
+					</view>
+					<view class="row">
+						<text class="label">份数：</text>
+						<text class="value">{{canzhuotem.countsum}}</text>
+					</view>
 				</view>
 				<view class="row">
-					<text class="label">结账： </text>
+					<text class="label">结账时间： </text>
 					<text class="value">{{canzhuotem.checkdate}}</text>
 				</view>
 				<view class="row">

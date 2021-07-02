@@ -56,7 +56,7 @@
 			}
 		},
 		onLoad() {
-
+			
 		},
 		methods: {
 			goto(urltag){

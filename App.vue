@@ -5,14 +5,15 @@
 			uni.vue = this;
 			this.$mRouter.setVue(this);
 			//this.checkLogin();
-			console.log('App Launch')
+			
+			//console.log('App Launch')
 			uni.vue = this;
 		},
 		onShow: function() {
-			console.log('App Show')
+			//console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			//console.log('App Hide')
 		},
 		methods:{
 			checkLogin(){

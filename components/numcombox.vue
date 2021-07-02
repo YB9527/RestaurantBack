@@ -4,7 +4,7 @@
 			<image v-show="data[prop] !== min" mode="aspectFill" @click="setCount(data,-1)" src="/static/images/subtract.png">
 		</view>
 		
-		<input v-if="unit == 0 &&  data[prop]" class="input" v-model="data[prop]" type="number" />
+		<input v-if="unit == 0 &&  data[prop]" class="input" @input="change" v-model="data[prop]" type="number" />
 		<text v-else-if="data[prop]"> {{data[prop]}}</text>
 		<view class="menu-add">
 			<image mode="aspectFill" @click="setCount(data,1)" src="/static/images/icon_add.png">
@@ -38,6 +38,15 @@
 					data[this.prop] = this.min;
 				}
 				this.$emit("change",data);
+			},
+			change(val){
+				//console.log(val);
+				let data = this.data;
+				val = data[this.prop]*1;
+				data[this.prop] =val.toFixed(1)*1;
+				//data[this.prop] = val*1;
+				this.$emit("change",data);
+				//console.log(11,this.data[this.prop]);
 			}
 		}
 	}

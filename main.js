@@ -14,6 +14,9 @@ Vue.prototype.$Api = Api;
 import sysApi from '@/api/sysApi.js'
 Vue.prototype.$SysApi = sysApi;
 
+import storeConfigApi from '@/api/storeConfigApi.js'
+Vue.prototype.$StoreConfigApi = storeConfigApi;
+
 import $mRouter from '@/utils/router';
 Vue.prototype.$mRouter = $mRouter;
 			

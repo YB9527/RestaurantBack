@@ -4,14 +4,44 @@
 		<view>
 			<!-- 销售金额排行榜 -->
 		</view>
-		<view>
+		<view class="chartitem">
 			<!-- 销售金额饼图 -->
+			<view class="charttitle">
+				<text>菜品销售 金额 占比图如下：</text>
+			</view>
+			<view class="charts-box">
+			  <qiun-data-charts
+			    type="column"
+			    :chartData="chart.foodPricePie"
+			    background="none"
+			  />
+			</view>
 		</view>
-		<view>
+		<view class="chartitem">
 			<!-- 销售份数饼图 -->
+			<view class="charttitle">
+				<text>菜品销售 份额 占比图如下：</text>
+			</view>
+			<view class="charts-box">
+			  <qiun-data-charts
+			    type="pie"
+			    :chartData="chart.foodCountPie"
+			    background="none"
+			  />
+			</view>
 		</view>
-		<view>
+		<view class="chartitem">
 			<!-- 类型金额饼图 -->
+			<view class="charttitle">
+				<text>菜品分类销售 金额 占比图如下：</text>
+			</view>
+			<view class="charts-box">
+			  <qiun-data-charts
+			    type="pie"
+			    :chartData="chart.foodTypePricePie"
+			    background="none"
+			  />
+			</view>
 		</view>
 		
 	</view>
@@ -27,6 +57,27 @@
 				foodCountArray:[],
 				foodTypefoodPriceArray:[],
 				foodTypefoodCountArray:[],
+				chart:{
+					foodPricePie:{
+					
+					  categories:[],
+					   series: [{data: [],	 name:"",
+						}],
+						tooltipFormat:(a,b)=>{
+							console.log(1,a,b);
+						}
+					},
+					foodCountPie:{
+					  categories:[],
+					   series: [{data: [],	  
+						}]
+					},
+					foodTypePricePie:{
+					  categories:[],
+					   series: [{data: [],	  
+						}]
+					},
+				}
 			}
 		},
 		created() {
@@ -60,28 +111,42 @@
 				//console.log("foodArray:",foodArray);
 				this.computedSum(foodArray);
 				this.foodPriceArray.push(...foodArray);
-				console.log("foodPriceArray:",foodArray);
+				let foodPricePie = this.chart.foodPricePie;
+				foodArray.forEach(item=>{
+					foodPricePie.series[0].data.push({"name":item.label, "value":item.pricetotalsum});
+                  foodPricePie.categories.push(item.label);
+				});
+				//console.log("foodPriceArray:",foodArray);
 			},
 			async findFoodCount(){
 				let foodArray =await yyqkApi.findyearfoodcount();
-				//console.log("foodArray:",foodArray);
+
 				this.computedSum(foodArray);
 				this.foodCountArray.push(...foodArray);
-				console.log("foodCountArray:",foodArray);
+				//console.log("foodCountArray:",foodArray);
+				let foodCountPie = this.chart.foodCountPie;
+				foodArray.forEach(item=>{
+					foodCountPie.series[0].data.push({"name":item.label, "value":item.countsum});
+				  
+				});
 			},
 			async findFoodTypePrice(){
 				let foodArray =await yyqkApi.findyeartypeprice();
-				//console.log("foodArray:",foodArray);
 				this.computedSum(foodArray);
 				this.foodTypefoodPriceArray.push(...foodArray);
-				console.log("foodTypefoodPriceArray:",foodArray);
+				//console.log("foodTypefoodPriceArray:",foodArray);
+				let foodTypePricePie = this.chart.foodTypePricePie;
+				foodArray.forEach(item=>{
+					foodTypePricePie.series[0].data.push({"name":item.foodtypelabel, "value":item.pricetotalsum});
+				  
+				});
+				
 			},
 			async findFoodTypeCount(){
 				let foodArray =await yyqkApi.findyeartypecount();
-				//console.log("foodArray:",foodArray);
 				this.computedSum(foodArray);
 				this.foodTypefoodCountArray.push(...foodArray);
-				console.log("foodTypefoodCountArray:",foodArray);
+				//console.log("foodTypefoodCountArray:",foodArray);
 			},
 			computedSum(foodArray){
 				let max = this.max - 1;
@@ -104,5 +169,14 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
+	.charttitle{
+		font-weight: 600;
+		font-size: $uni-font-size-lg2;
+	}
+	.chartitem{
+		margin-bottom: 50rpx;
+		background-color: #fff;
+		padding: 20rpx 10rpx;
+	}
 </style>

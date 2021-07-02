@@ -3,15 +3,7 @@ var baseURL = api.baseURL;
 
 import canZhuoFoodApi from './canZhuoFoodApi.js';
 
-var getCanZhuoCount = function(){
-	let url = baseURL+"/config/getzhuoshu";
-	//console.log(url);
-	return api.requestGETOneData({url}).then(data=>{
-		return data.value;
-	})
-	
-}
-exports.getCanZhuoCount = getCanZhuoCount;
+
 
 var findById = function(id){
 	let url = baseURL+"/canzhuo/findbyid?id="+id;
@@ -26,27 +18,13 @@ var findById = function(id){
 exports.findById = findById;
 
 var findcanzhuoingbyzanzhuonum = function(canzhuonum){
-	let url = baseURL+"/canzhuo/findcanzhuoingbyzanzhuonum?canzhuonum="+canzhuonum;
+	let url = baseURL+"/canzhuo/findcanzhuoingbyzanzhuonum_ht?canzhuonum="+canzhuonum;
 	return api.requestGET({url});
 	
 }
 exports.findcanzhuoingbyzanzhuonum = findcanzhuoingbyzanzhuonum;
 
-var setCanZhuoCount = function(canzhuocount){
-	
-	let url = baseURL+"/config/getzhuoshu";
-	//console.log(url);
-	return api.requestGETOneData({url}).then(data=>{
-		url = baseURL+"/config/setzhuoshuo";
-		data.value = canzhuocount;
-		//sdebugger
-		return api.requestPOST({url,data}).then(res=>{
-			return res
-		})
-	})
 
-}
-exports.setCanZhuoCount = setCanZhuoCount;
 
 
 var findCanZhuoHomeData = function(){

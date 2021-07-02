@@ -86,10 +86,9 @@
 			},
 			//查找总桌数
 			findcanZhuoCount() {
-				canZhuoApi.getCanZhuoCount().then(canzhuocount => {
-					if (canzhuocount) {
-						//console.log(1,canzhuocount)
-						this.canzhuomax = canzhuocount * 1;
+				this.$StoreConfigApi.findConfig().then(store => {
+					if (store && store.canzhuocount) {
+						this.canzhuomax = store.canzhuocount * 1;
 					}
 				});
 			},

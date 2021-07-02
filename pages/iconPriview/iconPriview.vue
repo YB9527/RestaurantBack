@@ -29,8 +29,14 @@
 			
 			
 			copy(value){
-				console.log(value);
-				/* #ifndef H5 */		
+				uni.setClipboardData({
+				    data: value,
+				    success: function () {
+				        console.log('success');
+				    }
+				});
+				 console.log('<text  class="'+value+'"></text>' );
+				/*		
 				uni.setClipboardData({
 					data:value,//要被复制的内容
 					success:()=>{//复制成功的回调函数
@@ -38,8 +44,8 @@
 						title:'复制成功'
 					  })
 					}
-				  });
-				 /* #endif */
+				  }); 
+				  */
 			},
 			//读取图标文件
 			readIconInCss(){
