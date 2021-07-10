@@ -4,10 +4,10 @@
 			<text>总共餐桌数量：</text>
 			<input type="text" v-model="store.canzhuocount" placeholder="请输入" />
 		</view>
-		<view class="item">
+		<!-- <view class="item">
 			<text>设置营业时间段：</text>
 			<input type="text" v-model="store.canzhuocount" placeholder="请输入" />
-		</view>
+		</view> -->
 		<!-- <view class="item">
 			<text>店铺名称：</text>
 			<input type="text" v-model="store.storename" placeholder="请输入" />

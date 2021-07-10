@@ -22,9 +22,14 @@
 					<text class="label">结账时间： </text>
 					<text class="value">{{canzhuotem.checkdate}}</text>
 				</view>
-				<view class="row">
-					<text class="label ">支付金额： </text>
-					<text :class="canzhuotem.ischeckout?'':'price'" class="value">{{canzhuotem.finalcharge}}</text>
+				<view class=" sprow">
+					<view class="row">
+						<text class="label ">支付金额： </text>
+						<text :class="canzhuotem.ischeckout?'':'price'" class="value">{{canzhuotem.finalcharge}}</text>
+					</view>
+					<view class="row" v-if="!canzhuotem.ischeckout">
+						<text class="price ">未结账</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -130,7 +135,7 @@
 				let canzhuonum = this.canzhuonum;
 				let canzhuoArray = await canZhuoApi.findcanzhuoingbyzanzhuonum(canzhuonum);
 				this.canzhuoArray = canzhuoArray;
-				console.log(canzhuoArray)
+				//console.log(canzhuoArray)
 				 uni.setNavigationBarTitle({
 				    title: '王氏羊肉（'+canzhuonum+"号桌）"
 				});
@@ -202,6 +207,7 @@
 				uni.showLoading({
 					title:"稍等..."
 				});
+				console.log(canzhuo);
 				//如果有数量为0的就删除
 				let canzhuofoodArray = canzhuo.canzhuofoodArray;
 				if(!canzhuofoodArray){
@@ -282,9 +288,14 @@
 			   await canZhuoFoodApi.update(food);
 			 }
 			},
-			foodCountChange(data){
+			foodCountChange(food){
 				let canzhuo = this.canzhuo;
 				let updatecanzhuofoodArray = canzhuo.canzhuofoodArray;
+				updatecanzhuofoodArray.forEach(item=>{
+					if(food.id == item.id){
+						item.count = food.count;
+					}
+				})
 				canZhuoApi.computedCanZhuoFood(canzhuo,updatecanzhuofoodArray);
 				canzhuo.finalcharge = canzhuo.pricetotal;
 				this.showsavebtn = true;
@@ -293,7 +304,10 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.sprow{
+		align-items: center;
+	}
 	.checoutlist{
 		padding: 0 20rpx;
 		.canzhuoacitve{

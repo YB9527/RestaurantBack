@@ -36,8 +36,8 @@
 							<text class="value">￥{{food.countsum*food.price}}</text>
 						</view>
 						<view class="switch row" v-if="isedit">
-							<view @click="itemMove(index,-1)" v-if="index != 0"><text class="cuIcon-fold"> </text></view>
-							<view @click="itemMove(index,+1)" v-if="index != foodArray.length-1"> <text  class="cuIcon-unfold"></text></view>
+							<view @click="itemMove(foodArray,food,-1)" v-if="index != 0"><text class="cuIcon-fold"> </text></view>
+							<view @click="itemMove(foodArray,food,+1)" v-if="index != foodArray.length-1"> <text  class="cuIcon-unfold"></text></view>
 						</view>
 					</view>
 				</view>
@@ -128,12 +128,12 @@
 				food.isdelete = 1;
 			},
 			//条目移动
-			itemMove(index,value){
-				let tem =this.foodArray[index];
-				let tem2 =this.foodArray[index+value];
-				this.foodArray.splice(index,1,tem2);
-				this.foodArray.splice(index+value,1,tem);
-
+			itemMove(list,item,value){
+				let index = list.indexOf(item);
+				let tem =list[index];
+				let tem2 =list[index+value];
+				list.splice(index,1,tem2);
+				list.splice(index+value,1,tem);
 			},
 			//到编辑食物页面
 			gotoFoodManager(foodid){

@@ -6,7 +6,7 @@ export default {
 	defaultAuth:true,
 	auths:{
 		requiresAuth:[
-			{name: 'index',label:"点餐",path: '/',},
+			{name: 'index',label:"点餐",path: '/pages/index/index',},
 			{name: 'canZhuo',label:"餐桌",path: '/pages/canZhuo/canZhuo',},
 			{name: 'canZhuoFood',label:"餐桌上的食物",path: '/pages/canZhuo/canZhuoFood',},
 			{name: 'foodTypeManager',label:"食物类型管理",path: '/pages/foodTypeManager/foodTypeManager',},
@@ -26,7 +26,8 @@ export default {
 		],
 		// 非权限路由
 		noAuth:[
-			{name: 'login',label:"登录",path: '/pages/login/login'},
+			{name: 'login',label:"登录",path: '/pages/user/login/login'},
+			{name: 'regist',label:"注册",path: '/pages/user/regist/regist'},
 
 		],
 	}

@@ -5,6 +5,9 @@ Vue.config.productionTip = false
 
 App.mpType = 'app'
 
+import store from './store'
+Vue.prototype.$store = store
+
 import Tool from '@/common/Tool.js'
 Vue.prototype.$Tool = Tool;
 
@@ -67,6 +70,7 @@ Vue.filter('minuteCompted',(start,end)=>{
 
 
 const app = new Vue({
+	store,
     ...App
 })
 app.$mount()

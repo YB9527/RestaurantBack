@@ -15,8 +15,8 @@
 					</view>
 					
 					<view class="switch" v-if="isedit">
-						<view @click="itemMove(index,-1)" v-if="index != 0"><text class="cuIcon-fold"> </text></view>
-						<view @click="itemMove(index,+1)" v-if="index != foodtypeList.length-1"> <text  class="cuIcon-unfold"></text></view>
+						<view @click="itemMove(foodtypeList,foodtype,-1)" v-if="index != 0"><text class="cuIcon-fold"> </text></view>
+						<view @click="itemMove(foodtypeList,foodtype,+1)" v-if="index != foodtypeList.length-1"> <text  class="cuIcon-unfold"></text></view>
 					</view>
 				</view>
 				<view class="itemmargin sprow">
@@ -25,7 +25,6 @@
 						<text>{{foodtype.foodcount?foodtype.foodcount :0 }}</text>
 					</view>
 				</view>
-				
 			</view>
 		</view>
 		
@@ -134,13 +133,12 @@
 				tihs.isedit =false;
 			},
 			//条目移动
-			itemMove(index,value){
-				let tem =this.foodtypeList[index];
-				let tem2 =this.foodtypeList[index+value];
-				this.foodtypeList.splice(index,1,tem2);
-				this.foodtypeList.splice(index+value,1,tem);
-				
-				//console.log(this.foodtypeList);
+			itemMove(list,item,value){
+				let index = list.indexOf(item);
+				let tem =list[index];
+				let tem2 =list[index+value];
+				list.splice(index,1,tem2);
+				list.splice(index+value,1,tem);
 			},
 			
 			gotoFoodArray(foodtype){
@@ -175,9 +173,6 @@
 							this.openAddTypeDialog();
 							break;
 					}
-				
-				
-				
 			},
 			/**
 			 * 添加食物类型

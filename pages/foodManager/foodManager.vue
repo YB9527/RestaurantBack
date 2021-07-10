@@ -7,8 +7,11 @@
 				<view class="imgcontent">
 					<uni-file-picker  ref="upload"
 						@delete="deleteUniFile"
-						@select="select" :url="uploadAttr.url" :auto-upload="false"
-						 v-model="uploadAttr.imageValue" file-mediatype="image" mode="grid"
+						@select="select" 
+						:url="uploadAttr.url" 
+						:auto-upload="false"
+						 v-model="uploadAttr.imageValue" 
+						 file-mediatype="image" mode="grid"
 						file-extname="jpeg,png,jpg" :limit="1" :readonly="uploadAttr.readonly" />
 				</view>
 				
