@@ -12,7 +12,7 @@
 				<view class="content">
 					<view class="top sprow" >
 						<view>
-							<text class="label">{{food.label}}</text>
+							<text class="label" @click="gotoFoodManager(food.id)">{{food.label}}</text>
 							<text class="price">￥{{food.price}}/{{food.unit | foodUnitFilter}}</text>
 						</view>
 						<view @click="deleteFood(index,food)"  v-if="isedit">
@@ -106,7 +106,7 @@
 				foodArray.forEach(item=>{
 					item.baseimageurl =  this.$Api.imgpriewurl+item.imageurl;
 				})
-				console.log(foodArray);
+				//console.log(foodArray);
 			},
 			//保存编辑
 			async editOk(){

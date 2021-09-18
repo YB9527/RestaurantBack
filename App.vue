@@ -77,12 +77,14 @@
 		display: flex;
 		justify-content: space-between;
 	}
-	.inputborder{
-		border-bottom: 1px solid #999999;
-	}
 	.itemmargin{
 		margin-top: 20rpx;
 	}
+	
+	.inputborder{
+		border-bottom: 1px solid #999999;
+	}
+	
 	
 	
 </style>

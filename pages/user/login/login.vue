@@ -42,7 +42,9 @@
 						if(user){
 							this.user = user;
 							if(user && user.username && user.password){
-								
+								uni.showLoading({
+									title:"自动登录中..."
+								})
 								this.login();
 							}
 						}
@@ -54,12 +56,9 @@
 				
 			},
 			async login(){
-				uni.showLoading({
-					title:"自动登录中..."
-				})
 				let user = await userApi.login(this.user);
 				if(user){
-					this.$mRouter.reLaunch("index");
+					this.$mRouter.redirectTo("index");
 				}else{
 					uni.showToast({
 						title:"账号密码错误",
